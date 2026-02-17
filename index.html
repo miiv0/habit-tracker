@@ -18,6 +18,7 @@
             <button class="theme-toggle" onclick="toggleTheme()">🌕</button>
         </div>
 
+        <!-- Calendar View -->
         <div id="calendarView">
             <div class="calendar-card">
                 <div class="weekdays">
@@ -31,8 +32,23 @@
                 </div>
                 <div class="days" id="calendarDays"></div>
             </div>
+
+            <!-- General Tasks Section -->
+            <div class="general-tasks-card">
+                <div class="general-tasks-header">
+                    <div class="general-tasks-title">
+                        <span class="general-tasks-icon">📄</span>
+                        <h2>Tasks</h2>
+                    </div>
+                    <button class="add-general-btn" onclick="openGeneralModal()">+</button>
+                </div>
+                <div id="generalTasksList">
+                    <div class="empty-state-small">No general tasks yet</div>
+                </div>
+            </div>
         </div>
 
+        <!-- Day Tasks View -->
         <div id="tasksView" class="tasks-view calendar-card">
             <div class="tasks-header">
                 <button class="back-btn" onclick="showCalendar()">← Back</button>
@@ -43,6 +59,7 @@
         </div>
     </div>
 
+    <!-- Timed Task Modal -->
     <div class="modal" id="taskModal">
         <div class="modal-content">
             <h2>Add Task</h2>
@@ -88,6 +105,29 @@
                 <div class="modal-buttons">
                     <button type="button" class="btn btn-cancel" onclick="closeModal()">Cancel</button>
                     <button type="button" class="btn btn-delete" id="deleteBtn" style="display: none;">Delete</button>
+                    <button type="submit" class="btn btn-save">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- General Task Modal -->
+    <div class="modal" id="generalTaskModal">
+        <div class="modal-content">
+            <h2 id="generalModalTitle">Add General Task</h2>
+            <form id="generalTaskForm">
+                <div class="form-group">
+                    <label>Task Name</label>
+                    <input type="text" id="generalTaskName" placeholder="Enter task name" required>
+                </div>
+                <div class="form-group">
+                    <label>Color</label>
+                    <div class="color-picker" id="generalColorPicker"></div>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn btn-cancel" onclick="closeGeneralModal()">Cancel</button>
+                    <button type="button" class="btn btn-delete" id="generalDeleteBtn"
+                        style="display: none;">Delete</button>
                     <button type="submit" class="btn btn-save">Save</button>
                 </div>
             </form>
