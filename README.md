@@ -3,6 +3,10 @@
 
 A simple and intuitive habit tracking application to help you build and maintain positive routines.
 
+## Website
+
+https://miiv0.github.io/habit-tracker/
+
 ## Features
 
 - **Create Tasks** - Add new habits to track your daily progress
