@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habit Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-left">
+                <h1>Habit Tracker</h1>
+                <div class="month-year" id="monthYear"></div>
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()">🌕</button>
+        </div>
+
+        <div id="calendarView">
+            <div class="calendar-card">
+                <div class="weekdays">
+                    <div class="weekday">Sun</div>
+                    <div class="weekday">Mon</div>
+                    <div class="weekday">Tue</div>
+                    <div class="weekday">Wed</div>
+                    <div class="weekday">Thu</div>
+                    <div class="weekday">Fri</div>
+                    <div class="weekday">Sat</div>
+                </div>
+                <div class="days" id="calendarDays"></div>
+            </div>
+        </div>
+
+        <div id="tasksView" class="tasks-view calendar-card">
+            <div class="tasks-header">
+                <button class="back-btn" onclick="showCalendar()">← Back</button>
+                <div class="selected-date" id="selectedDate"></div>
+            </div>
+            <button class="add-task-btn" onclick="openModal()">+ Add Task</button>
+            <div class="timeline" id="timeline"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="taskModal">
+        <div class="modal-content">
+            <h2>Add Task</h2>
+            <form id="taskForm">
+                <div class="form-group">
+                    <label>Task Name</label>
+                    <input type="text" id="taskName" placeholder="Enter task name" required>
+                </div>
+                <div class="form-group">
+                    <label>Time Range</label>
+                    <div class="time-inputs">
+                        <input type="time" id="startTime" required>
+                        <input type="time" id="endTime" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Color</label>
+                    <div class="color-picker" id="colorPicker"></div>
+                </div>
+                <div class="form-group">
+                    <label>Repeat</label>
+                    <select id="repeatOption">
+                        <option value="none">Never</option>
+                        <option value="daily">Daily</option>
+                        <option value="weekdays">Weekdays (Mon-Fri)</option>
+                        <option value="weekends">Weekends (Sat-Sun)</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="custom">Custom Days...</option>
+                    </select>
+                </div>
+                <div class="form-group" id="customDaysGroup" style="display: none;">
+                    <label>Select Days</label>
+                    <div class="days-selector">
+                        <button type="button" class="day-btn" data-day="0">S</button>
+                        <button type="button" class="day-btn" data-day="1">M</button>
+                        <button type="button" class="day-btn" data-day="2">T</button>
+                        <button type="button" class="day-btn" data-day="3">W</button>
+                        <button type="button" class="day-btn" data-day="4">T</button>
+                        <button type="button" class="day-btn" data-day="5">F</button>
+                        <button type="button" class="day-btn" data-day="6">S</button>
+                    </div>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn btn-cancel" onclick="closeModal()">Cancel</button>
+                    <button type="button" class="btn btn-delete" id="deleteBtn" style="display: none;">Delete</button>
+                    <button type="submit" class="btn btn-save">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

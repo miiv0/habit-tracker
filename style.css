@@ -1,0 +1,548 @@
+:root {
+    --bg-primary: #f5f5f7;
+    --bg-card: rgba(255, 255, 255, 0.8);
+    --text-primary: #1d1d1f;
+    --text-secondary: #86868b;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --shadow: rgba(0, 0, 0, 0.1);
+    --accent: #007aff;
+    --accent-hover: #0051d5;
+}
+
+[data-theme="dark"] {
+    --bg-primary: #000000;
+    --bg-card: rgba(28, 28, 30, 0.8);
+    --text-primary: #f5f5f7;
+    --text-secondary: #86868b;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --shadow: rgba(0, 0, 0, 0.5);
+    --accent: #0a84ff;
+    --accent-hover: #409cff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: var(--bg-primary);
+    min-height: 100vh;
+    padding: 20px;
+    overflow-x: hidden;
+    transition: background 0.3s ease;
+}
+
+.container {
+    max-width: 430px;
+    margin: 0 auto;
+}
+
+.header {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 28px;
+    padding: 24px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 32px var(--shadow);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-left h1 {
+    color: var(--text-primary);
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.month-year {
+    color: var(--text-secondary);
+    font-size: 16px;
+    margin-top: 4px;
+}
+
+.theme-toggle {
+    width: 44px;
+    height: 44px;
+    border-radius: 22px;
+    background: var(--border-color);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    background: var(--accent);
+    transform: scale(1.05);
+}
+
+.calendar-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 28px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 32px var(--shadow);
+}
+
+.weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.weekday {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 0;
+}
+
+.days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+}
+
+.day {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    background: var(--border-color);
+    padding: 6px 2px 4px 2px;
+}
+
+.day:hover {
+    background: var(--accent);
+    color: white;
+    transform: scale(1.05);
+}
+
+.day:hover .task-dots {
+    opacity: 0.8;
+}
+
+.day.selected {
+    background: var(--accent);
+    color: white;
+    box-shadow: 0 4px 16px rgba(0, 122, 255, 0.3);
+    transform: scale(1.08);
+}
+
+.day.empty {
+    opacity: 0.3;
+    cursor: default;
+}
+
+.day.empty:hover {
+    background: var(--border-color);
+    color: var(--text-primary);
+    transform: none;
+}
+
+.task-dots {
+    display: flex;
+    gap: 2px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2px;
+    max-width: 100%;
+}
+
+.task-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.tasks-view {
+    display: none;
+}
+
+.tasks-view.active {
+    display: block;
+}
+
+.tasks-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.back-btn {
+    background: var(--border-color);
+    border: none;
+    color: var(--text-primary);
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.back-btn:hover {
+    background: var(--accent);
+    color: white;
+}
+
+.selected-date {
+    color: var(--text-primary);
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.add-task-btn {
+    background: var(--accent);
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 24px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    box-shadow: 0 4px 16px var(--shadow);
+    transition: all 0.3s;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.add-task-btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--shadow);
+}
+
+.timeline {
+    position: relative;
+}
+
+.task-block {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 16px;
+    margin-bottom: 12px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.task-block::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    border-radius: 0 2px 2px 0;
+    background: var(--task-color, #007aff);
+}
+
+.task-block:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 16px var(--shadow);
+}
+
+.task-block.completed {
+    opacity: 0.6;
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.task-title {
+    color: var(--text-primary);
+    font-size: 17px;
+    font-weight: 600;
+    flex: 1;
+}
+
+.task-time {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+.checkbox {
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    border: 2px solid var(--text-secondary);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s;
+    flex-shrink: 0;
+    margin-left: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.checkbox:hover {
+    border-color: var(--accent);
+    transform: scale(1.1);
+}
+
+.checkbox.checked {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.checkbox.checked::after {
+    content: '✓';
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--bg-card);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border-radius: 28px;
+    padding: 28px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 20px 60px var(--shadow);
+    animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--border-color);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal h2 {
+    color: var(--text-primary);
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--border-color);
+    border-radius: 20px;
+    font-size: 15px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    transition: all 0.3s;
+    font-family: inherit;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
+}
+
+.time-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.color-picker {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.color-option {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 16px;
+    border: 3px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.color-option:hover {
+    transform: scale(1.1);
+}
+
+.color-option.selected {
+    border-color: var(--accent);
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+.modal-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.modal-buttons.has-delete {
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.btn {
+    padding: 12px;
+    border: none;
+    border-radius: 22px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-cancel {
+    background: var(--border-color);
+    color: var(--text-primary);
+}
+
+.btn-cancel:hover {
+    background: var(--text-secondary);
+    color: white;
+}
+
+.btn-delete {
+    background: #ff3b30;
+    color: white;
+}
+
+.btn-delete:hover {
+    background: #d32f2f;
+}
+
+.btn-save {
+    background: var(--accent);
+    color: white;
+    box-shadow: 0 4px 16px var(--shadow);
+}
+
+.btn-save:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--shadow);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-secondary);
+}
+
+.empty-state-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+}
+
+.days-selector {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+}
+
+.day-btn {
+    aspect-ratio: 1;
+    border: 1.5px solid var(--border-color);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    padding: 0;
+}
+
+.day-btn:hover {
+    border-color: var(--accent);
+}
+
+.day-btn.selected {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+}
+
+.repeat-badge {
+    display: inline-block;
+    background: var(--border-color);
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 8px;
+    margin-top: 4px;
+}
